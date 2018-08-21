@@ -1,11 +1,30 @@
-num_of_agent=10;
-num_of_keyword=6;
-num_of_round=10000;
+% % % num_of_agent=10;
+% % % num_of_keyword=6;
+% % % num_of_round=10000;
+% % % click_through_rate=rand(num_of_keyword,1);
+% % % [click_through_rate,ind]=sort(click_through_rate,'descend');
+
+num_of_agent=4;
+num_of_keyword=3;
+num_of_round=20;
 click_through_rate=rand(num_of_keyword,1);
-[click_through_rate,ind]=sort(click_through_rate,'descend');
+click_through_rate(1)=1;
+click_through_rate(2)=2/3;
+click_through_rate(3)=1/3;
+
+% % % valuation=50*rand(num_of_agent,1);
+% % % given_price=valuation;
 
 valuation=50*rand(num_of_agent,1);
 given_price=valuation;
+valuation(1)=161;
+valuation(2)=160;
+valuation(3)=159;
+valuation(4)=157;
+given_price(1)=130.5;
+given_price(2)=130;
+given_price(3)=129.5;
+given_price(4)=100;
 
 [allocated_player,allocated_keyword,paid_price,ind]=GSP(click_through_rate,given_price);
 utility=calc_utility(valuation,paid_price,click_through_rate,allocated_keyword);
@@ -14,9 +33,16 @@ utility=calc_utility(valuation,paid_price,click_through_rate,allocated_keyword);
 for i=1:num_of_round
     known_price=given_price;
     for j=1:num_of_agent
-        given_price(j)=greedy_BB(j, click_through_rate, valuation(j), allocated_keyword, ind ,known_price);
+        given_price(j)=greedy_BB_new(j, click_through_rate, valuation(j), allocated_keyword, ind ,known_price);
     end
     given_price
+    figure(1);
+    plot(given_price(1),given_price(2),'ro','Markersize',5);
+    hold on;
+    plot(given_price(3),given_price(4),'bo','Markersize',5);
+    hold off;
+    axis([90 160 90 160]);
+    pause(1);
     [allocated_player,allocated_keyword,paid_price,ind]=GSP(click_through_rate,given_price);
     utility=calc_utility(valuation,paid_price,click_through_rate,allocated_keyword);
 end
