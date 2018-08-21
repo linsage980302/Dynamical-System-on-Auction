@@ -25,9 +25,12 @@ for i=1:num_of_keyword
         wanted=i;
     end
 end
-if wanted==1
-    bid=(value+must_pay(1))/2;
+if click_through_rate(wanted)*(value-must_pay(wanted))>=0
+    if wanted==1
+        bid=(value+must_pay(1))/2;
+    else
+        bid=value-click_through_rate(wanted)/click_through_rate(wanted-1)*(value-must_pay(wanted));
+    end
 else
-    bid=value-click_through_rate(wanted)/click_through_rate(wanted-1)*(value-must_pay(wanted));
-end
+    bid=value;
 end
