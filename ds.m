@@ -26,6 +26,19 @@ given_price(2)=130;
 given_price(3)=129.5;
 given_price(4)=100;
 
+gamma=zeros(num_of_agent,1);
+gamma(1)=1/2;
+gamma(4)=0;
+for i=2:3
+    gamma(i)=click_through_rate(i)/click_through_rate(i-1);
+end
+nash=zeros(num_of_agent,1);
+nash(4)=valuation(4);
+for i=-3:-1
+    j=-i;
+    nash(j)=(gamma(j))*nash(j+1)+(1-gamma(j))*valuation(j);
+end
+
 [allocated_player,allocated_keyword,paid_price,ind]=GSP(click_through_rate,given_price);
 utility=calc_utility(valuation,paid_price,click_through_rate,allocated_keyword);
 
@@ -37,8 +50,9 @@ for i=1:num_of_round
     end
     given_price
     figure(1);
+    plot(nash(1),nash(2),'go','Markersize',5); hold on;
+    plot(nash(3),nash(4),'yo','Markersize',5);
     plot(given_price(1),given_price(2),'ro','Markersize',5);
-    hold on;
     plot(given_price(3),given_price(4),'bo','Markersize',5);
     hold off;
     axis([90 160 90 160]);
