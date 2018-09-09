@@ -1,6 +1,6 @@
 num_of_agent=4;
 num_of_keyword=3;
-num_of_round=100;
+num_of_round=20;
 click_through_rate=rand(num_of_keyword,1);
 
 click_through_rate(1)=1;
@@ -11,7 +11,7 @@ valuation=50*rand(num_of_agent,1);
 given_price=zeros(num_of_agent,1);
 
 valuation(1)=161;
-valuation(2)=160;
+valuation(2)=161;
 valuation(3)=159;
 valuation(4)=150;
 
@@ -27,6 +27,7 @@ for i=-3:-1
     j=-i;
     nash(j)=(gamma(j))*nash(j+1)+(1-gamma(j))*valuation(j);
 end
+nash = sort(nash, 'descend');
 
 unstable=rand(4,1);
 unstable(1)=130.5;
@@ -34,7 +35,7 @@ unstable(2)=130;
 unstable(3)=129.5;
 unstable(4)=100;
 
-for times=1:100000
+for times=1:10000
     a=90+71*rand();
     b=90+71*rand();
     given_price(1)=a;
@@ -52,19 +53,20 @@ for times=1:100000
         end
         [allocated_player,allocated_keyword,paid_price,ind]=GSP(click_through_rate,given_price);
         utility=calc_utility(valuation,paid_price,click_through_rate,allocated_keyword);
-        if normest(given_price-nash)<0.0001
+        test_nash=sort(given_price, 'descend');
+        if normest(test_nash-nash)<0.0001
             plot(a,b,'ro','MarkerFaceColor','r');
-            axis([90 165 90 165]);
+            axis([85 165 85 165]);
             hold on;
             break;
         end
-% % %         if normest(given_price-unstable)<0.0001
+% % %         if normest(test_nash-unstable)<0.0001
 % % %             plot(a,b,'bo','MarkerFaceColor','b');
 % % %             axis([85 165 85 165]);
 % % %             hold on;
 % % %             break;
 % % %         end
-        if i==99
+        if i==num_of_round
             plot(a,b,'go','MarkerFaceColor','g');
             axis([85 165 85 165]);
             hold on;
