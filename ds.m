@@ -6,7 +6,7 @@
 
 num_of_agent=4;
 num_of_keyword=3;
-num_of_round=20;
+num_of_round=10;
 click_through_rate=rand(num_of_keyword,1);
 click_through_rate(1)=1;
 click_through_rate(2)=2/3;
@@ -18,13 +18,13 @@ click_through_rate(3)=1/3;
 valuation=50*rand(num_of_agent,1);
 given_price=valuation;
 valuation(1)=161;
-valuation(2)=160;
+valuation(2)=161;
 valuation(3)=159;
-valuation(4)=157;
-given_price(1)=130.5;
+valuation(4)=150;
+given_price(1)=155;
 given_price(2)=130;
-given_price(3)=129.5;
-given_price(4)=100;
+given_price(3)=145.5;
+given_price(4)=150;
 
 gamma=zeros(num_of_agent,1);
 gamma(1)=1/2;
@@ -45,10 +45,10 @@ utility=calc_utility(valuation,paid_price,click_through_rate,allocated_keyword);
 
 for i=1:num_of_round
     known_price=given_price;
+    given_price
     for j=1:num_of_agent
         given_price(j)=greedy_BB_new(j, click_through_rate, valuation(j), allocated_keyword, ind ,known_price);
     end
-    given_price
     figure(1);
     plot(nash(1),nash(2),'go','Markersize',5); hold on;
     plot(nash(3),nash(4),'yo','Markersize',5);
