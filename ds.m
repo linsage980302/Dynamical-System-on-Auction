@@ -17,14 +17,16 @@ click_through_rate(3)=1/3;
 
 valuation=50*rand(num_of_agent,1);
 given_price=valuation;
-valuation(1)=100;
-valuation(2)=110;
-valuation(3)=120;
-valuation(4)=130;
-given_price(1)=110;
-given_price(2)=120;
-given_price(3)=125;
-given_price(4)=130;
+
+valuation(1)=130;
+valuation(2)=120;
+valuation(3)=110;
+valuation(4)=100;
+
+given_price(1)=121.2394;
+given_price(2)=103.3331;
+given_price(3)=105
+given_price(4)=100;
 
 gamma=zeros(num_of_agent,1);
 gamma(1)=1/2;
