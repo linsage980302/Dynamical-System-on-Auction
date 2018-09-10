@@ -17,14 +17,14 @@ click_through_rate(3)=1/3;
 
 valuation=50*rand(num_of_agent,1);
 given_price=valuation;
-valuation(1)=161;
-valuation(2)=161;
-valuation(3)=159;
-valuation(4)=150;
-given_price(1)=155;
-given_price(2)=130;
-given_price(3)=145.5;
-given_price(4)=150;
+valuation(1)=100;
+valuation(2)=110;
+valuation(3)=120;
+valuation(4)=130;
+given_price(1)=110;
+given_price(2)=120;
+given_price(3)=125;
+given_price(4)=130;
 
 gamma=zeros(num_of_agent,1);
 gamma(1)=1/2;
@@ -41,7 +41,7 @@ end
 
 [allocated_player,allocated_keyword,paid_price,ind]=GSP(click_through_rate,given_price);
 utility=calc_utility(valuation,paid_price,click_through_rate,allocated_keyword);
-
+allocated_keyword
 
 for i=1:num_of_round
     known_price=given_price;
